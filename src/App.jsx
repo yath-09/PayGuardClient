@@ -1,30 +1,39 @@
-import { useEffect, useState } from 'react'
+
 import './App.css'
-import axios from "axios"
-function  App() {
-  const [result,setResult]=useState(null)
+import Navbar from './components/Navbar';
+import Home from './pages/Home';
+import MyBanks from './pages/MyBanks'
+import TransactionHistory from './pages/TransactionHistory'
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import DashSidebar from './components/DashSidebar';
 
-  useEffect(() => {
-    
-    const fetchData = async () => {
-      try {
-        const { data } = await axios.get("/api");
-        setResult(data);
-        console.log(data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
 
-    fetchData();
-  }, []); 
-
+function App() {
 
   return (
-    <div>
-      welcome to PayGuard ${result}
-    </div>
+   <>
+       <Router>
+        <Navbar />
+        <div className="flex h-screen">
+          <div className="lg:block w-[15%]">
+            <DashSidebar />
+          </div>
+          <div className="flex-grow bg-[#F5F5F5]">
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/mybanks" element={<MyBanks />} />
+              <Route path="/transactionhistory" element={<TransactionHistory />} />
+            </Routes>
+          </div>
+        </div>
+      </Router>
+    </>
   )
 }
 
 export default App
+
+
+
+
+
